@@ -1,0 +1,38 @@
+package de.yaquza.gui.renderingmenu;
+
+import com.sun.imageio.plugins.common.I18N;
+import de.yaquza.client.ClientSettings;
+import de.yaquza.gui.MainGui;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+
+public class IngameRenderingMenu extends GuiScreen {
+   public String status;
+
+   public IngameRenderingMenu(MainGui mainGui) {}
+
+   public void initGui() {
+      Keyboard.enableRepeatEvents(true);
+      Minecraft.getMinecraft().entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
+      this.buttonList.add(new GuiButton(1, this.width / 2 - 25, 70, 60, 20, I18n.format("Ping", new Object[0])));
+      this.buttonList.add(new GuiButton(2, this.width / 2 - 90, 70, 60, 20, I18n.format("FPS", new Object[0])));
+      this.buttonList.add(new GuiButton(3, this.width / 2 + 40, 70, 60, 20, I18n.format("Coords", new Object[0])));
+      drawDefaultBackground();
+   }
+
+   public void actionPerformed(GuiButton button) throws IOException {
+      if (button.id == 1)
+         ClientSettings.Ping = !ClientSettings.Ping;
+      if (button.id == 2)
+         ClientSettings.FPS = !ClientSettings.FPS;
+      if (button.id == 3)
+         ClientSettings.Coords = !ClientSettings.Coords;
+   }
+
+}

@@ -1,0 +1,43 @@
+package de.yaquza.gui;
+
+import de.yaquza.gui.renderingmenu.IngameRenderingMenu;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
+
+import java.io.IOException;
+
+public class MainGui extends GuiScreen {
+   protected String field_146442_a = "Einstellungen";
+
+   public MainGui(GuiIngameMenu guiIngameMenu) {}
+   public MainGui(IngameRenderingMenu ingameRenderingMenu) {}
+
+   public void initGui() {
+      Minecraft.getMinecraft().entityRenderer.loadShader(new ResourceLocation("shaders/post/blur.json"));
+      this.buttonList.add(new GuiButton(10, this.width / 2 - 35, 126, 80, 20, I18n.format("Rendering")));
+   }
+
+   protected void actionPerformed(GuiButton button) throws IOException {
+      if(button.id == 10) {
+         this.mc.displayGuiScreen(new IngameRenderingMenu(this));
+      }
+   }
+
+   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+      this.drawDefaultBackground();
+      this.drawCenteredString(this.fontRendererObj, this.field_146442_a, this.width / 2, 15, 16777215);
+      drawCenteredString(this.fontRendererObj, I18n.format("Tutorial", new Object[1]), this.width / 2, 40, -1);
+      super.drawScreen(mouseX, mouseY, partialTicks);
+   }
+
+   @Override
+   public void onGuiClosed() {
+      Minecraft.getMinecraft().entityRenderer.loadEntityShader(null);
+      super.onGuiClosed();
+   }
+
+}

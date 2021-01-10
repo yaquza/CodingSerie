@@ -1,0 +1,5 @@
+package de.yaquza;
+
+public class Tutorial {
+   public String name = "Tutorial", version = "1.0", creator = "yaquza";
+}
